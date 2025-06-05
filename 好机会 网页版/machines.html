@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农机租赁 - 好机会智慧农业综合服务平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- 引入日期选择器样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 130px;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 40px;
+            font-size: 28px;
+        }
+
+        /* 欢迎语样式 */
+        .welcome-text {
+            color: var(--primary-dark);
+            margin-left: 20px;
+        }
+
+        .search-section {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .filter-select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 120px;
+        }
+
+        .machines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .machine-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .machine-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .machine-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .machine-info {
+            padding: 15px;
+        }
+
+        .machine-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+        }
+
+        .machine-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .tag {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .machine-location, .machine-time, .machine-price {
+            margin: 8px 0;
+            color: #666;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            background: #fff;
+            width: 90%;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .recommendations {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .recommendations h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-dark);
+        }
+
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 6px;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo-section">
+                <img src="透明底logo.png" alt="好机会Logo" class="nav-logo">
+                <span class="platform-name">好机会智慧农业综合服务平台</span>
+            </div>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="about.html" class="nav-link">平台介绍</a>
+                <a href="machines.html" class="nav-link">农机租赁</a>
+                <a href="farmers.html" class="nav-link">合作农户</a>
+                <a href="contracts.html" class="nav-link">订单农业</a>
+                <a href="dashboard.html" class="nav-link">数据看板</a>
+                <a href="contact.html" class="nav-link">联系我们</a>
+                <span id="welcomeMessage" class="welcome-text"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <h1 class="page-title">🚜 农机租赁</h1>
+        <!-- 搜索和筛选区域 -->
+        <section class="search-section">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="请输入农机名称">
+            </div>
+            <div class="filter-group">
+                <select class="filter-select">
+                    <option value="">用途</option>
+                    <option value="深耕">深耕</option>
+                    <option value="旋耕">旋耕</option>
+                    <option value="播种">播种</option>
+                    <option value="收割">收割</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">品牌</option>
+                    <option value="约翰迪尔">约翰迪尔</option>
+                    <option value="久保田">久保田</option>
+                    <option value="雷沃">雷沃</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">地区</option>
+                    <option value="海南">海南</option>
+                    <option value="广东">广东</option>
+                    <option value="广西">广西</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">价格区间</option>
+                    <option value="0-200">200元/天以下</option>
+                    <option value="200-500">200-500元/天</option>
+                    <option value="500+">500元/天以上</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- 农机展示区域 -->
+        <section class="machines-grid">
+            <!-- 农机卡片示例 -->
+            <div class="machine-card">
+                <img src="农机.jpg" alt="约翰迪尔拖拉机" class="machine-image">
+                <div class="machine-info">
+                    <h3 class="machine-name">约翰迪尔-1204拖拉机</h3>
+                    <div class="machine-tags">
+                        <span class="tag">深耕</span>
+                        <span class="tag">旋耕</span>
+                    </div>
+                    <p class="machine-location">📍 海南·儋州</p>
+                    <p class="machine-time">🕒 可租：6月5日至6月10日</p>
+                    <p class="machine-price">💰 ￥300元/天</p>
+                    <button class="book-btn" onclick="openModal()">立即预约</button>
+                </div>
+            </div>
+
+            <div class="machine-card">
+                <img src="农机.jpg" alt="久保田收割机" class="machine-image">
+                <div class="machine-info">
+                    <h3 class="machine-name">久保田-688Q收割机</h3>
+                    <div class="machine-tags">
+                        <span class="tag">收割</span>
+                    </div>
+                    <p class="machine-location">📍 海南·三亚</p>
+                    <p class="machine-time">🕒 可租：6月1日至6月15日</p>
+                    <p class="machine-price">💰 ￥500元/天</p>
+                    <button class="book-btn" onclick="openModal()">立即预约</button>
+                </div>
+            </div>
+
+            <div class="machine-card">
+                <img src="农机.jpg" alt="雷沃播种机" class="machine-image">
+                <div class="machine-info">
+                    <h3 class="machine-name">雷沃-2BMF-6播种机</h3>
+                    <div class="machine-tags">
+                        <span class="tag">播种</span>
+                    </div>
+                    <p class="machine-location">📍 海南·文昌</p>
+                    <p class="machine-time">🕒 可租：6月8日至6月20日</p>
+                    <p class="machine-price">💰 ￥200元/天</p>
+                    <button class="book-btn" onclick="openModal()">立即预约</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 推荐区域 -->
+        <section class="recommendations">
+            <h2>你可能还喜欢</h2>
+            <div class="recommendations-grid">
+                <!-- 推荐农机卡片 -->
+                <div class="machine-card">
+                    <img src="农机.jpg" alt="东方红拖拉机" class="machine-image">
+                    <div class="machine-info">
+                        <h3 class="machine-name">东方红-LX2004拖拉机</h3>
+                        <div class="machine-tags">
+                            <span class="tag">深耕</span>
+                        </div>
+                        <p class="machine-location">📍 海南·琼海</p>
+                        <p class="machine-time">🕒 可租：6月10日至6月25日</p>
+                        <p class="machine-price">💰 ￥280元/天</p>
+                        <button class="book-btn" onclick="openModal()">立即预约</button>
+                    </div>
+                </div>
+
+                <div class="machine-card">
+                    <img src="农机.jpg" alt="沃得收割机" class="machine-image">
+                    <div class="machine-info">
+                        <h3 class="machine-name">沃得-4LZ-4.0E收割机</h3>
+                        <div class="machine-tags">
+                            <span class="tag">收割</span>
+                        </div>
+                        <p class="machine-location">📍 海南·澄迈</p>
+                        <p class="machine-time">🕒 可租：6月15日至6月30日</p>
+                        <p class="machine-price">💰 ￥450元/天</p>
+                        <button class="book-btn" onclick="openModal()">立即预约</button>
+                    </div>
+                </div>
+
+                <div class="machine-card">
+                    <img src="农机.jpg" alt="德邦播种机" class="machine-image">
+                    <div class="machine-info">
+                        <h3 class="machine-name">德邦-2BXF-12播种机</h3>
+                        <div class="machine-tags">
+                            <span class="tag">播种</span>
+                        </div>
+                        <p class="machine-location">📍 海南·临高</p>
+                        <p class="machine-time">🕒 可租：6月20日至7月5日</p>
+                        <p class="machine-price">💰 ￥180元/天</p>
+                        <button class="book-btn" onclick="openModal()">立即预约</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 预约弹窗 -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>预约租赁</h2>
+            <form id="bookingForm" onsubmit="submitBooking(event)">
+                <div class="form-group">
+                    <label for="startDate">开始时间</label>
+                    <input type="text" id="startDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="endDate">结束时间</label>
+                    <input type="text" id="endDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">联系方式</label>
+                    <input type="tel" id="phone" required pattern="[0-9]{11}" placeholder="请输入手机号码">
+                </div>
+                <button type="submit" class="book-btn">提交预约</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 成功提示 -->
+    <div id="successMessage" class="success-message">
+        预约提交成功，我们会尽快与您联系！
+    </div>
+
+    <!-- 引入日期选择器脚本 -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/zh.js"></script>
+    
+    <script>
+        // 初始化日期选择器
+        flatpickr("#startDate", {
+            locale: "zh",
+            dateFormat: "Y-m-d",
+            minDate: "today"
+        });
+        
+        flatpickr("#endDate", {
+            locale: "zh",
+            dateFormat: "Y-m-d",
+            minDate: "today"
+        });
+
+        // 打开弹窗
+        function openModal() {
+            document.getElementById('bookingModal').style.display = 'block';
+        }
+
+        // 关闭弹窗
+        function closeModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+        }
+
+        // 提交预约
+        function submitBooking(event) {
+            event.preventDefault();
+            
+            // 显示成功消息
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            
+            // 3秒后隐藏成功消息
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+            
+            // 关闭弹窗
+            closeModal();
+            
+            // 重置表单
+            event.target.reset();
+        }
+
+        // 点击弹窗外部关闭弹窗
+        window.onclick = function(event) {
+            const modal = document.getElementById('bookingModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // 检查登录状态并显示欢迎语
+        window.onload = function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const currentUser = localStorage.getItem('currentUser');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            
+            if (isLoggedIn === 'true' && currentUser) {
+                welcomeMessage.textContent = `${currentUser}，欢迎您！`;
+            }
+        }
+    </script>
+</body>
+</html> 

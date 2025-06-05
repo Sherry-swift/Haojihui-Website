@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>好机会智能农业服务平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo-section">
+                <img src="透明底logo.png" alt="好机会Logo" class="nav-logo">
+                <span class="platform-name">好机会智慧农业综合服务平台</span>
+            </div>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="about.html" class="nav-link">平台介绍</a>
+                <a href="machines.html" class="nav-link">农机租赁</a>
+                <a href="farmers.html" class="nav-link">合作农户</a>
+                <a href="contracts.html" class="nav-link">订单农业</a>
+                <a href="dashboard.html" class="nav-link">数据看板</a>
+                <a href="agriculture.html" class="nav-link">农业资讯</a>
+                <a href="contact.html" class="nav-link">联系我们</a>
+                <span id="welcomeMessage" class="welcome-text"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 轮播图区域 -->
+    <section class="carousel-section">
+        <div class="carousel">
+            <div class="carousel-item active">
+                <img src="轮播图展示/1.jpg" alt="农业图片1">
+                <div class="carousel-caption">让农民更富裕，让农业更智能</div>
+            </div>
+            <div class="carousel-item">
+                <img src="轮播图展示/2.jpg" alt="农业图片2">
+                <div class="carousel-caption">让农民更富裕，让农业更智能</div>
+            </div>
+            <div class="carousel-item">
+                <img src="轮播图展示/3.jpg" alt="农业图片3">
+                <div class="carousel-caption">让农民更富裕，让农业更智能</div>
+            </div>
+            <div class="carousel-item">
+                <img src="轮播图展示/4.jpg" alt="农业图片4">
+                <div class="carousel-caption">让农民更富裕，让农业更智能</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 平台简介 -->
+    <section id="intro" class="intro-section">
+        <div class="intro-container">
+            <img src="简介背景图.jpg" alt="平台简介" class="intro-image">
+            <div class="intro-text">
+                好机会是一站式智能农业服务平台，融合农机租赁、订单农业与供应链协同，帮助农户降本增效、稳产增收。平台配套"农机小黑盒"定位系统，支持在线预约、智能调度、数据管理与金融接入，助力农业现代化。
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心功能 -->
+    <section id="features" class="features-section">
+        <h2 class="section-title">核心功能</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-tractor feature-icon"></i>
+                <h3 class="feature-title">农机租赁预约</h3>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-handshake feature-icon"></i>
+                <h3 class="feature-title">合作订单对接</h3>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-map-marker-alt feature-icon"></i>
+                <h3 class="feature-title"><a href="location.html" style="text-decoration: none; color: inherit;">农机实时定位</a></h3>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h3 class="feature-title">数据统计与分析</h3>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-headset feature-icon"></i>
+                <h3 class="feature-title">服务与投诉反馈</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- AR展示区 -->
+    <section id="ar-show" class="ar-section">
+        <h2 class="section-title">AR农机展示</h2>
+        <div class="ar-container">
+            <div class="ar-grid">
+                <div class="ar-card">
+                    <img src="AR展示/1.jpg" alt="AR农机1" class="ar-image">
+                    <div class="ar-text">扫描查看3D展示</div>
+                </div>
+                <div class="ar-card">
+                    <img src="AR展示/2.jpg" alt="AR农机2" class="ar-image">
+                    <div class="ar-text">扫描查看3D展示</div>
+                </div>
+                <div class="ar-card">
+                    <img src="AR展示/3.jpg" alt="AR农机3" class="ar-image">
+                    <div class="ar-text">扫描查看3D展示</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact" class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div>好机会团队</div>
+                <div class="footer-contact">
+                    <div>邮箱：2947477278@qq.com</div>
+                    <div>电话：18581882762</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .welcome-text {
+            margin-left: 20px;
+            color: #4CAF50;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        // 检查登录状态并显示欢迎语
+        window.onload = function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const currentUser = localStorage.getItem('currentUser');
+            
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            if (isLoggedIn === 'true' && currentUser) {
+                welcomeMessage.textContent = `${currentUser}，欢迎您！`;
+            } else {
+                welcomeMessage.textContent = '';
+            }
+        }
+
+        // 轮播图自动播放
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        // 每5秒切换一次图片
+        setInterval(nextSlide, 5000);
+    </script>
+</body>
+</html> 
