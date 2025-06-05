@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农业资讯 - 好机会智慧农业综合服务平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 130px;
+            padding: 20px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            gap: 30px;
+        }
+
+        .content-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        /* 欢迎语样式 */
+        .welcome-text {
+            color: var(--primary-dark);
+            margin-left: 20px;
+        }
+
+        /* 资讯分类导航 */
+        .category-nav {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .category-link {
+            color: #333;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .category-link:hover,
+        .category-link.active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        /* 资讯卡片网格 */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+
+        .news-summary {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .read-more:hover {
+            background: #45a049;
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-title {
+            color: #4CAF50;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .hot-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .hot-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .hot-item:last-child {
+            border-bottom: none;
+        }
+
+        .hot-link {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .hot-link:hover {
+            color: #4CAF50;
+        }
+
+        .featured-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .featured-item:last-child {
+            border-bottom: none;
+        }
+
+        .featured-image {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .featured-title {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+            text-decoration: none;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+
+        .featured-title:hover {
+            color: #4CAF50;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-size: 14px;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo-section">
+                <img src="透明底logo.png" alt="好机会Logo" class="nav-logo">
+                <span class="platform-name">好机会智慧农业综合服务平台</span>
+            </div>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="about.html" class="nav-link">平台介绍</a>
+                <a href="machines.html" class="nav-link">农机租赁</a>
+                <a href="farmers.html" class="nav-link">合作农户</a>
+                <a href="contracts.html" class="nav-link">订单农业</a>
+                <a href="dashboard.html" class="nav-link">数据看板</a>
+                <a href="contact.html" class="nav-link">联系我们</a>
+                <span id="welcomeMessage" class="welcome-text"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <div class="content-main">
+            <!-- 标题区域 -->
+            <h1 class="page-title">农业资讯</h1>
+            <p class="subtitle">聚焦前沿动态，洞察农业未来</p>
+
+            <!-- 资讯分类导航 -->
+            <div class="category-nav">
+                <a href="#" class="category-link active">行业新闻</a>
+                <a href="#" class="category-link">政策解读</a>
+                <a href="#" class="category-link">科技农业</a>
+                <a href="#" class="category-link">案例故事</a>
+            </div>
+
+            <!-- 资讯卡片网格 -->
+            <div class="news-grid">
+                <!-- 资讯卡片1 -->
+                <div class="news-card">
+                    <img src="资讯.jpg" alt="资讯图片" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">2025年中央一号文件：推进智慧农业建设</h3>
+                        <p class="news-summary">文件强调要加快推进农业数字化转型，促进智慧农业发展，提升农业现代化水平。</p>
+                        <a href="#" class="read-more">阅读更多</a>
+                    </div>
+                </div>
+
+                <!-- 资讯卡片2 -->
+                <div class="news-card">
+                    <img src="资讯.jpg" alt="资讯图片" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">农机智能化技术助力春耕提效</h3>
+                        <p class="news-summary">智能农机设备在春耕中大显身手，自动导航、精准施肥等技术显著提高作业效率。</p>
+                        <a href="#" class="read-more">阅读更多</a>
+                    </div>
+                </div>
+
+                <!-- 资讯卡片3 -->
+                <div class="news-card">
+                    <img src="资讯.jpg" alt="资讯图片" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">国家发布最新补贴政策，扶持高效节水灌溉</h3>
+                        <p class="news-summary">新政策重点支持农业节水灌溉设备的推广应用，助力农业可持续发展。</p>
+                        <a href="#" class="read-more">阅读更多</a>
+                    </div>
+                </div>
+
+                <!-- 资讯卡片4 -->
+                <div class="news-card">
+                    <img src="资讯.jpg" alt="资讯图片" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">湖南农户试点"订单农业"取得丰收</h3>
+                        <p class="news-summary">通过订单农业模式，农户与企业实现双赢，产销对接更加顺畅。</p>
+                        <a href="#" class="read-more">阅读更多</a>
+                    </div>
+                </div>
+
+                <!-- 资讯卡片5 -->
+                <div class="news-card">
+                    <img src="资讯.jpg" alt="资讯图片" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">AI如何改变农产品分拣与流通？</h3>
+                        <p class="news-summary">人工智能技术在农产品分级、包装、物流等环节的应用显著提升效率。</p>
+                        <a href="#" class="read-more">阅读更多</a>
+                    </div>
+                </div>
+
+                <!-- 资讯卡片6 -->
+                <div class="news-card">
+                    <img src="资讯.jpg" alt="资讯图片" class="news-image">
+                    <div class="news-content">
+                        <h3 class="news-title">数字乡村案例：浙江某村的转型故事</h3>
+                        <p class="news-summary">借助数字化手段，传统农业村落实现产业升级，村民收入显著提升。</p>
+                        <a href="#" class="read-more">阅读更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <!-- 热门推荐 -->
+            <div class="sidebar-section">
+                <h2 class="sidebar-title">热门推荐</h2>
+                <ul class="hot-list">
+                    <li class="hot-item">
+                        <a href="#" class="hot-link">农业农村部：加快推进数字农业农村建设</a>
+                    </li>
+                    <li class="hot-item">
+                        <a href="#" class="hot-link">智慧农业示范基地建设经验分享</a>
+                    </li>
+                    <li class="hot-item">
+                        <a href="#" class="hot-link">农业科技创新助力乡村振兴</a>
+                    </li>
+                    <li class="hot-item">
+                        <a href="#" class="hot-link">探索农业现代化发展新路径</a>
+                    </li>
+                    <li class="hot-item">
+                        <a href="#" class="hot-link">数字技术赋能现代农业发展</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 平台精选 -->
+            <div class="sidebar-section">
+                <h2 class="sidebar-title">平台精选</h2>
+                <div class="featured-item">
+                    <img src="资讯.jpg" alt="精选资讯" class="featured-image">
+                    <a href="#" class="featured-title">智慧农业发展论坛在京召开，共话农业数字化未来</a>
+                </div>
+                <div class="featured-item">
+                    <img src="资讯.jpg" alt="精选资讯" class="featured-image">
+                    <a href="#" class="featured-title">农业物联网技术应用案例分析</a>
+                </div>
+                <div class="featured-item">
+                    <img src="资讯.jpg" alt="精选资讯" class="featured-image">
+                    <a href="#" class="featured-title">打造智慧农业产业链，助力农民增收</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        © 2025 好机会 HAOJIHUI | 智慧农业综合服务平台版权所有
+    </footer>
+
+    <script>
+        // 检查登录状态并显示欢迎语
+        window.onload = function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const currentUser = localStorage.getItem('currentUser');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            
+            if (isLoggedIn === 'true' && currentUser) {
+                welcomeMessage.textContent = `${currentUser}，欢迎您！`;
+            }
+        }
+    </script>
+</body>
+</html> 

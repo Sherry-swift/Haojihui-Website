@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农机实时定位 - 好机会智慧农业综合服务平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 80px;
+            padding: 20px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        /* 欢迎语样式 */
+        .welcome-text {
+            color: var(--primary-dark);
+            margin-left: 20px;
+        }
+
+        /* 筛选器样式 */
+        .filter-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .filter-select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        /* 农机列表样式 */
+        .machine-list {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .machine-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .machine-table th,
+        .machine-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .machine-table th {
+            background: #f8f8f8;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .machine-table tr:hover {
+            background: #f5f5f5;
+            cursor: pointer;
+        }
+
+        /* 状态标签 */
+        .status-tag {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: white;
+        }
+
+        .status-working {
+            background: #4CAF50;
+        }
+
+        .status-standby {
+            background: #FFA000;
+        }
+
+        .status-offline {
+            background: #9E9E9E;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-size: 14px;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo-section">
+                <img src="透明底logo.png" alt="好机会Logo" class="nav-logo">
+                <span class="platform-name">好机会智慧农业综合服务平台</span>
+            </div>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="about.html" class="nav-link">平台介绍</a>
+                <a href="machines.html" class="nav-link">农机租赁</a>
+                <a href="farmers.html" class="nav-link">合作农户</a>
+                <a href="contracts.html" class="nav-link">订单农业</a>
+                <a href="dashboard.html" class="nav-link">数据看板</a>
+                <a href="agriculture.html" class="nav-link">农业资讯</a>
+                <a href="contact.html" class="nav-link">联系我们</a>
+                <span id="welcomeMessage" class="welcome-text"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <!-- 标题区域 -->
+        <h1 class="page-title">农机实时定位</h1>
+        <p class="subtitle">掌握农机动态，调度高效无忧</p>
+
+        <!-- 筛选器 -->
+        <div class="filter-section">
+            <div class="filter-group">
+                <span class="filter-label">农机状态：</span>
+                <select class="filter-select" id="status-filter">
+                    <option value="all">全部</option>
+                    <option value="working">作业中</option>
+                    <option value="standby">待命</option>
+                    <option value="offline">离线</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">所属区域：</span>
+                <select class="filter-select" id="region-filter">
+                    <option value="all">全部</option>
+                    <option value="northeast">东北</option>
+                    <option value="north">华北</option>
+                    <option value="central">华中</option>
+                    <option value="east">华东</option>
+                    <option value="south">华南</option>
+                </select>
+            </div>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="输入农机编号搜索..." id="search-input">
+            </div>
+        </div>
+
+        <!-- 农机列表 -->
+        <div class="machine-list">
+            <table class="machine-table">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>状态</th>
+                        <th>所属</th>
+                        <th>位置</th>
+                        <th>电量</th>
+                        <th>更新时间</th>
+                    </tr>
+                </thead>
+                <tbody id="machine-list-body">
+                    <!-- 列表内容将由JavaScript动态生成 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        © 2025 好机会 HAOJIHUI | 智慧农业综合服务平台版权所有
+    </footer>
+
+    <script>
+        // 检查登录状态并显示欢迎语
+        window.onload = function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const currentUser = localStorage.getItem('currentUser');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            
+            if (isLoggedIn === 'true' && currentUser) {
+                welcomeMessage.textContent = `${currentUser}，欢迎您！`;
+            }
+
+            // 初始化农机数据
+            initMachineData();
+        }
+
+        // 模拟农机数据
+        const machineData = [
+            {
+                id: 'A-001',
+                status: 'working',
+                location: {lat: 45.141, lng: 124.825},
+                address: '吉林松原',
+                owner: '张大爷',
+                battery: 90,
+                lastUpdate: '2分钟前'
+            },
+            {
+                id: 'A-002',
+                status: 'standby',
+                location: {lat: 36.200, lng: 117.087},
+                address: '山东泰安',
+                owner: '李阿姨',
+                battery: 75,
+                lastUpdate: '5分钟前'
+            },
+            {
+                id: 'A-003',
+                status: 'offline',
+                location: {lat: 34.797, lng: 114.307},
+                address: '河南开封',
+                owner: '刘叔',
+                battery: 15,
+                lastUpdate: '10分钟前'
+            },
+            {
+                id: 'A-004',
+                status: 'working',
+                location: {lat: 33.347, lng: 120.163},
+                address: '江苏盐城',
+                owner: '王哥',
+                battery: 95,
+                lastUpdate: '1分钟前'
+            },
+            {
+                id: 'A-005',
+                status: 'working',
+                location: {lat: 31.352, lng: 118.376},
+                address: '安徽芜湖',
+                owner: '陈伯',
+                battery: 88,
+                lastUpdate: '3分钟前'
+            },
+            {
+                id: 'A-008',
+                status: 'working',
+                location: {lat: 39.915, lng: 116.404},
+                address: '北京市朝阳区农业示范园',
+                owner: '张大爷',
+                battery: 85,
+                lastUpdate: '5分钟前'
+            },
+            {
+                id: 'A-012',
+                status: 'standby',
+                location: {lat: 39.925, lng: 116.414},
+                address: '北京市海淀区科技园',
+                owner: '李师傅',
+                battery: 65,
+                lastUpdate: '2分钟前'
+            },
+            {
+                id: 'A-015',
+                status: 'offline',
+                location: {lat: 39.905, lng: 116.394},
+                address: '北京市丰台区农业园',
+                owner: '王老板',
+                battery: 20,
+                lastUpdate: '30分钟前'
+            }
+        ];
+
+        // 获取状态文本
+        function getStatusText(status) {
+            const statusMap = {
+                'working': '作业中',
+                'standby': '待命',
+                'offline': '离线'
+            };
+            return statusMap[status] || status;
+        }
+
+        // 初始化农机列表
+        function initMachineData() {
+            const tbody = document.getElementById('machine-list-body');
+            tbody.innerHTML = machineData.map(machine => `
+                <tr data-id="${machine.id}">
+                    <td>${machine.id}</td>
+                    <td><span class="status-tag status-${machine.status}">${getStatusText(machine.status)}</span></td>
+                    <td>${machine.owner}</td>
+                    <td>${machine.address}</td>
+                    <td>${machine.battery}%</td>
+                    <td>${machine.lastUpdate}</td>
+                </tr>
+            `).join('');
+        }
+
+        // 添加筛选功能
+        document.getElementById('status-filter').addEventListener('change', filterMachines);
+        document.getElementById('region-filter').addEventListener('change', filterMachines);
+        document.getElementById('search-input').addEventListener('input', filterMachines);
+
+        function filterMachines() {
+            const statusFilter = document.getElementById('status-filter').value;
+            const regionFilter = document.getElementById('region-filter').value;
+            const searchText = document.getElementById('search-input').value.toLowerCase();
+
+            const filteredData = machineData.filter(machine => {
+                const matchStatus = statusFilter === 'all' || machine.status === statusFilter;
+                const matchRegion = regionFilter === 'all' || true; // 需要添加区域数据后完善
+                const matchSearch = machine.id.toLowerCase().includes(searchText) ||
+                                  machine.owner.toLowerCase().includes(searchText);
+                return matchStatus && matchRegion && matchSearch;
+            });
+
+            // 更新列表
+            const tbody = document.getElementById('machine-list-body');
+            tbody.innerHTML = filteredData.map(machine => `
+                <tr data-id="${machine.id}">
+                    <td>${machine.id}</td>
+                    <td><span class="status-tag status-${machine.status}">${getStatusText(machine.status)}</span></td>
+                    <td>${machine.owner}</td>
+                    <td>${machine.address}</td>
+                    <td>${machine.battery}%</td>
+                    <td>${machine.lastUpdate}</td>
+                </tr>
+            `).join('');
+        }
+    </script>
+</body>
+</html> 

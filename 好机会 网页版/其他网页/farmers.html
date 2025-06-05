@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合作农户 - 好机会智慧农业综合服务平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 130px;
+            padding: 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 40px;
+            font-size: 28px;
+        }
+
+        /* 农户卡片网格布局 */
+        .farmers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 农户卡片样式 */
+        .farmer-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .farmer-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .farmer-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 60px;
+            margin: 0 auto 15px;
+            object-fit: cover;
+        }
+
+        .farmer-name {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .farmer-location {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .farmer-type {
+            color: #4CAF50;
+            margin-bottom: 8px;
+        }
+
+        .farmer-equipment {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 加入我们按钮 */
+        .join-button-container {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .join-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .join-button:hover {
+            background-color: #45a049;
+        }
+
+        /* 欢迎语样式 */
+        .welcome-text {
+            color: var(--primary-dark);
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo-section">
+                <img src="透明底logo.png" alt="好机会Logo" class="nav-logo">
+                <span class="platform-name">好机会智慧农业综合服务平台</span>
+            </div>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="about.html" class="nav-link">平台介绍</a>
+                <a href="machines.html" class="nav-link">农机租赁</a>
+                <a href="farmers.html" class="nav-link">合作农户</a>
+                <a href="contracts.html" class="nav-link">订单农业</a>
+                <a href="dashboard.html" class="nav-link">数据看板</a>
+                <a href="contact.html" class="nav-link">联系我们</a>
+                <span id="welcomeMessage" class="welcome-text"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <h1 class="page-title">🌾 合作农户展示</h1>
+        
+        <!-- 农户卡片网格 -->
+        <div class="farmers-grid">
+            <!-- 农户卡片1 -->
+            <div class="farmer-card">
+                <img src="农户头像.jpg" alt="农户头像" class="farmer-avatar">
+                <h2 class="farmer-name">李大叔</h2>
+                <p class="farmer-location">河南南阳</p>
+                <p class="farmer-type">玉米种植</p>
+                <p class="farmer-equipment">所需设备：收割机、播种机</p>
+            </div>
+
+            <!-- 农户卡片2 -->
+            <div class="farmer-card">
+                <img src="农户头像.jpg" alt="农户头像" class="farmer-avatar">
+                <h2 class="farmer-name">张叔</h2>
+                <p class="farmer-location">山东潍坊</p>
+                <p class="farmer-type">小麦种植</p>
+                <p class="farmer-equipment">所需设备：播种机、收割机</p>
+            </div>
+
+            <!-- 农户卡片3 -->
+            <div class="farmer-card">
+                <img src="农户头像.jpg" alt="农户头像" class="farmer-avatar">
+                <h2 class="farmer-name">王大哥</h2>
+                <p class="farmer-location">河北邯郸</p>
+                <p class="farmer-type">水稻种植</p>
+                <p class="farmer-equipment">所需设备：插秧机、收割机</p>
+            </div>
+
+            <!-- 农户卡片4 -->
+            <div class="farmer-card">
+                <img src="农户头像.jpg" alt="农户头像" class="farmer-avatar">
+                <h2 class="farmer-name">刘阿姨</h2>
+                <p class="farmer-location">安徽阜阳</p>
+                <p class="farmer-type">大豆种植</p>
+                <p class="farmer-equipment">所需设备：播种机、收割机</p>
+            </div>
+
+            <!-- 农户卡片5 -->
+            <div class="farmer-card">
+                <img src="农户头像.jpg" alt="农户头像" class="farmer-avatar">
+                <h2 class="farmer-name">赵叔</h2>
+                <p class="farmer-location">江苏徐州</p>
+                <p class="farmer-type">花生种植</p>
+                <p class="farmer-equipment">所需设备：播种机、收获机</p>
+            </div>
+
+            <!-- 农户卡片6 -->
+            <div class="farmer-card">
+                <img src="农户头像.jpg" alt="农户头像" class="farmer-avatar">
+                <h2 class="farmer-name">孙大姐</h2>
+                <p class="farmer-location">河南商丘</p>
+                <p class="farmer-type">棉花种植</p>
+                <p class="farmer-equipment">所需设备：播种机、采棉机</p>
+            </div>
+        </div>
+
+        <!-- 加入我们按钮 -->
+        <div class="join-button-container">
+            <a href="join.html" class="join-button">加入我们</a>
+        </div>
+    </div>
+
+    <script>
+        // 检查登录状态并显示欢迎语
+        window.onload = function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const currentUser = localStorage.getItem('currentUser');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            
+            if (isLoggedIn === 'true' && currentUser) {
+                welcomeMessage.textContent = `${currentUser}，欢迎您！`;
+            }
+        }
+    </script>
+</body>
+</html> 
