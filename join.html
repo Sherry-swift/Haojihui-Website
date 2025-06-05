@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农户入驻申请 - 好机会智慧农业综合服务平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 130px;
+            padding: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 40px;
+            font-size: 28px;
+        }
+
+        /* 申请表单样式 */
+        .application-form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            margin: 30px auto 0;
+            width: 200px;
+        }
+
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+
+        /* 提示信息样式 */
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #4CAF50;
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+
+        /* 欢迎语样式 */
+        .welcome-text {
+            color: var(--primary-dark);
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo-section">
+                <img src="透明底logo.png" alt="好机会Logo" class="nav-logo">
+                <span class="platform-name">好机会智慧农业综合服务平台</span>
+            </div>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="about.html" class="nav-link">平台介绍</a>
+                <a href="machines.html" class="nav-link">农机租赁</a>
+                <a href="farmers.html" class="nav-link">合作农户</a>
+                <a href="contracts.html" class="nav-link">订单农业</a>
+                <a href="dashboard.html" class="nav-link">数据看板</a>
+                <a href="contact.html" class="nav-link">联系我们</a>
+                <span id="welcomeMessage" class="welcome-text"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <h1 class="page-title">🌾 农户入驻申请</h1>
+        
+        <form class="application-form" id="farmerApplicationForm">
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">联系电话</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">所在地区</label>
+                <input type="text" id="location" name="location" placeholder="例如：河南南阳" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cropType">主要种植作物</label>
+                <select id="cropType" name="cropType" required>
+                    <option value="">请选择</option>
+                    <option value="玉米">玉米</option>
+                    <option value="水稻">水稻</option>
+                    <option value="小麦">小麦</option>
+                    <option value="大豆">大豆</option>
+                    <option value="花生">花生</option>
+                    <option value="棉花">棉花</option>
+                    <option value="其他">其他</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="farmSize">种植面积（亩）</label>
+                <input type="number" id="farmSize" name="farmSize" required>
+            </div>
+
+            <div class="form-group">
+                <label for="equipment">所需农机设备</label>
+                <textarea id="equipment" name="equipment" placeholder="请详细描述您所需的农机设备类型" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="description">其他说明</label>
+                <textarea id="description" name="description" placeholder="请补充其他您想说明的信息"></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">提交申请</button>
+        </form>
+
+        <div id="successMessage" class="success-message">
+            申请提交成功！我们会尽快与您联系。
+        </div>
+    </div>
+
+    <script>
+        // 检查登录状态并显示欢迎语
+        window.onload = function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const currentUser = localStorage.getItem('currentUser');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            
+            if (isLoggedIn === 'true' && currentUser) {
+                welcomeMessage.textContent = `${currentUser}，欢迎您！`;
+            }
+        }
+
+        // 处理表单提交
+        document.getElementById('farmerApplicationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 在实际项目中，这里应该发送数据到服务器
+            // 这里仅做演示，显示成功消息
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // 清空表单
+            this.reset();
+            
+            // 3秒后隐藏成功消息
+            setTimeout(function() {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 3000);
+        });
+    </script>
+</body>
+</html> 

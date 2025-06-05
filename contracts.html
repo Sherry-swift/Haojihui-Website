@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单农业 - 好机会智慧农业综合服务平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 主要内容区域 */
+        .main-content {
+            margin-top: 130px;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 40px;
+            font-size: 28px;
+        }
+
+        /* 流程图样式 */
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 50px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .process-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: "→";
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4CAF50;
+            font-size: 24px;
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            background: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: #4CAF50;
+            font-size: 24px;
+        }
+
+        .step-title {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        /* 订单表格样式 */
+        .orders-table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .orders-table th,
+        .orders-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .orders-table th {
+            background: #4CAF50;
+            color: white;
+            font-weight: normal;
+        }
+
+        .orders-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .orders-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .status-ongoing {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-completed {
+            background: #e8f5e9;
+            color: #4caf50;
+        }
+
+        .status-pending {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        /* 按钮样式 */
+        .view-details-btn {
+            padding: 6px 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .view-details-btn:hover {
+            background: #45a049;
+        }
+
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 12px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .contract-section {
+            margin-bottom: 25px;
+        }
+
+        .contract-section h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .contract-section p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .sign-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sign-button:hover {
+            background: #45a049;
+        }
+
+        /* 欢迎语样式 */
+        .welcome-text {
+            color: var(--primary-dark);
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo-section">
+                <img src="透明底logo.png" alt="好机会Logo" class="nav-logo">
+                <span class="platform-name">好机会智慧农业综合服务平台</span>
+            </div>
+            <div class="nav-links">
+                <a href="home.html" class="nav-link">首页</a>
+                <a href="about.html" class="nav-link">平台介绍</a>
+                <a href="machines.html" class="nav-link">农机租赁</a>
+                <a href="farmers.html" class="nav-link">合作农户</a>
+                <a href="contracts.html" class="nav-link">订单农业</a>
+                <a href="dashboard.html" class="nav-link">数据看板</a>
+                <a href="contact.html" class="nav-link">联系我们</a>
+                <span id="welcomeMessage" class="welcome-text"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="main-content">
+        <h1 class="page-title">🌾 订单农业</h1>
+
+        <!-- 流程介绍 -->
+        <div class="process-flow">
+            <div class="process-step">
+                <div class="step-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <div class="step-title">需求对接</div>
+                <div class="step-desc">农产品加工企业下订单</div>
+            </div>
+            <div class="process-step">
+                <div class="step-icon">
+                    <i class="fas fa-file-signature"></i>
+                </div>
+                <div class="step-title">合作签约</div>
+                <div class="step-desc">与农户签署订单合同</div>
+            </div>
+            <div class="process-step">
+                <div class="step-icon">
+                    <i class="fas fa-tractor"></i>
+                </div>
+                <div class="step-title">农机匹配</div>
+                <div class="step-desc">平台协助租赁设备</div>
+            </div>
+            <div class="process-step">
+                <div class="step-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="step-title">生产追踪</div>
+                <div class="step-desc">农户定期反馈进度</div>
+            </div>
+            <div class="process-step">
+                <div class="step-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="step-title">成果交付</div>
+                <div class="step-desc">验收并支付尾款</div>
+            </div>
+        </div>
+
+        <!-- 订单展示表格 -->
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>订单编号</th>
+                    <th>产品类型</th>
+                    <th>加工企业名称</th>
+                    <th>农户数量</th>
+                    <th>合同金额</th>
+                    <th>合同状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>DD2024001</td>
+                    <td>优质小麦</td>
+                    <td>河南粮油加工有限公司</td>
+                    <td>15</td>
+                    <td>￥450,000</td>
+                    <td><span class="status-badge status-ongoing">执行中</span></td>
+                    <td><button class="view-details-btn" onclick="showContract('DD2024001')">查看详情</button></td>
+                </tr>
+                <tr>
+                    <td>DD2024002</td>
+                    <td>有机水稻</td>
+                    <td>金禾米业股份有限公司</td>
+                    <td>8</td>
+                    <td>￥280,000</td>
+                    <td><span class="status-badge status-pending">待验收</span></td>
+                    <td><button class="view-details-btn" onclick="showContract('DD2024002')">查看详情</button></td>
+                </tr>
+                <tr>
+                    <td>DD2024003</td>
+                    <td>玉米</td>
+                    <td>中粮生化能源有限公司</td>
+                    <td>12</td>
+                    <td>￥320,000</td>
+                    <td><span class="status-badge status-completed">已完成</span></td>
+                    <td><button class="view-details-btn" onclick="showContract('DD2024003')">查看详情</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 合同详情模态框 -->
+        <div id="contractModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+                <h2 style="margin-bottom: 30px; color: #4CAF50;">合同详情</h2>
+                
+                <div class="contract-section">
+                    <h3>合作对象</h3>
+                    <p>甲方：好机会智慧农业综合服务平台</p>
+                    <p>乙方：河南粮油加工有限公司</p>
+                    <p>丙方：合作农户（共15户）</p>
+                </div>
+
+                <div class="contract-section">
+                    <h3>交付标准</h3>
+                    <p>1. 产品质量需符合国家粮食收购质量标准GB1351-2008</p>
+                    <p>2. 水分含量不超过13.5%</p>
+                    <p>3. 杂质含量不超过1%</p>
+                    <p>4. 不得含有农药残留超标、重金属超标等质量安全问题</p>
+                </div>
+
+                <div class="contract-section">
+                    <h3>支付方式</h3>
+                    <p>1. 签约后支付30%预付款</p>
+                    <p>2. 生产过程中支付40%进度款</p>
+                    <p>3. 验收合格后支付30%尾款</p>
+                </div>
+
+                <div class="contract-section">
+                    <h3>风险分担</h3>
+                    <p>1. 自然灾害造成的损失由三方共同承担</p>
+                    <p>2. 人为因素造成的损失由责任方承担</p>
+                    <p>3. 市场价格波动风险由企业承担</p>
+                </div>
+
+                <div class="contract-section">
+                    <h3>平台责任</h3>
+                    <p>1. 提供农机设备租赁服务</p>
+                    <p>2. 提供技术指导和培训</p>
+                    <p>3. 协助进行质量监控</p>
+                    <p>4. 提供订单履约保障</p>
+                </div>
+
+                <button class="sign-button" onclick="signContract()">确认签署</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 检查登录状态并显示欢迎语
+        window.onload = function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const currentUser = localStorage.getItem('currentUser');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            
+            if (isLoggedIn === 'true' && currentUser) {
+                welcomeMessage.textContent = `${currentUser}，欢迎您！`;
+            }
+        }
+
+        // 显示合同详情
+        function showContract(orderId) {
+            document.getElementById('contractModal').style.display = 'block';
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            document.getElementById('contractModal').style.display = 'none';
+        }
+
+        // 签署合同
+        function signContract() {
+            alert('您已成功签署本合同！');
+            closeModal();
+        }
+
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('contractModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html> 
